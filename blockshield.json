@@ -17,7 +17,7 @@
     "license": "Copyright (c) 2025-2026 Splunk Inc.",
     "app_version": "1.0.1",
     "latest_tested_versions": [
-        "Version X.Y.Z, Month Year"
+        "BlockShield API v1.0, October 2026"
     ],
     "utctime_updated": "2026-09-30T22:15:21.752982Z",
     "package_name": "phantom_blockshield",
