@@ -197,7 +197,10 @@ action_result.parameter.ip | string | `ip` | 8.8.8.8 |
 action_result.status | string | | success failed |
 action_result.message | string | | Successfully retrieved info for IP 8.8.8.8 |
 action_result.summary.ip | string | `ip` | 8.8.8.8 |
-action_result.data.\* | string | | |
+action_result.data.\*.isblocked | boolean | | True False |
+action_result.data.\*.abuseipdb.info | string | | {"abuseConfidenceScore": 0, "countryCode": "US", "isp": "Google LLC", ...} |
+action_result.data.\*.virustotal | string | | {"data": {"attributes": {"last_analysis_stats": {...}, "reputation": 543, ...}}} |
+action_result.data.\*.bgpview | string | | {"status": "ok", "data": {"prefixes": [...], "rir_allocation": {...}, "ptr_record": "dns.google", ...}} |
 summary.total_objects | numeric | | 1 |
 summary.total_objects_successful | numeric | | 1 |
 
@@ -226,7 +229,9 @@ action_result.parameter.description | string | | Malicious domains reported by t
 action_result.status | string | | success failed |
 action_result.message | string | | Successfully added 5 domains |
 action_result.summary.domains_added | numeric | | 5 |
-action_result.data.\* | string | | |
+action_result.data.\*.links | numeric | | 100 |
+action_result.data.\*.domains | numeric | | 30 |
+action_result.data.\*.duration | numeric | | 0.41873 |
 summary.total_objects | numeric | | 1 |
 summary.total_objects_successful | numeric | | 1 |
 
@@ -259,7 +264,9 @@ action_result.parameter.description | string | | Malicious IP addresses reported
 action_result.status | string | | success failed |
 action_result.message | string | | Successfully added 5 IPs |
 action_result.summary.ips_added | numeric | | 5 |
-action_result.data.\* | string | | |
+action_result.data.\*.links | numeric | | 100 |
+action_result.data.\*.ips | numeric | | 30 |
+action_result.data.\*.duration | numeric | | 0.42 |
 summary.total_objects | numeric | | 1 |
 summary.total_objects_successful | numeric | | 1 |
 
@@ -288,7 +295,9 @@ action_result.parameter.description | string | | Malicious URLs reported by the 
 action_result.status | string | | success failed |
 action_result.message | string | | Successfully added 5 URLs |
 action_result.summary.urls_added | numeric | | 5 |
-action_result.data.\* | string | | |
+action_result.data.\*.links | numeric | | 100 |
+action_result.data.\*.urls | numeric | | 30 |
+action_result.data.\*.duration | numeric | | 0.41873 |
 summary.total_objects | numeric | | 1 |
 summary.total_objects_successful | numeric | | 1 |
 

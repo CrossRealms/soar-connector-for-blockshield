@@ -111,7 +111,6 @@ A common pattern chains the two kinds of action:
    those IP addresses are submitted. To send them in one request, join them with a **Format**
    block first, as shown above.
 
-
 ### Running Actions Outside a Playbook
 
 - **Investigation page:** open a container, click **Action**, choose a BlockShield action and asset,
