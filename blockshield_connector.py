@@ -106,7 +106,10 @@ class BlockShieldConnector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
         self.save_progress(BLOCKSHIELD_PROG_CONNECTING)
 
-        ret_val, _ = self._make_rest_call(BLOCKSHIELD_CONNECTIVITY_ENDPOINT, action_result)
+        config = self.get_config()
+        data = {"username": config.get("username"), "password": config.get("password")}
+
+        ret_val, _ = self._make_rest_call(BLOCKSHIELD_CONNECTIVITY_ENDPOINT, action_result, method="post", data=data)
 
         if phantom.is_fail(ret_val):
             self.save_progress(BLOCKSHIELD_ERR_CONNECTIVITY_TEST)
