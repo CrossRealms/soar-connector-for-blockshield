@@ -70,11 +70,6 @@ class BlockShieldConnector(BaseConnector):
         try:
             response = self._session.request(method=method, url=url, params=params, json=data, timeout=self._timeout)
 
-            # Add debug data
-            if hasattr(action_result, "add_debug_data"):
-                action_result.add_debug_data({"r_status_code": response.status_code})
-                action_result.add_debug_data({"r_text": response.text})
-
             # Process response
             if 200 <= response.status_code < 300:
                 if response.text:
