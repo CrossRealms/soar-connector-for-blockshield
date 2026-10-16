@@ -12,8 +12,8 @@ Retrieve threat intelligence about IP addresses and submit domains, IPs and URLs
 
 ### Prerequisites
 
-- A BlockShield account that is allowed to call the BlockShield API. The 'add bulk' actions
-  write to the blocklist, so the account needs write access if you plan to use them.
+- A BlockShield account with at least the **SOAR** role. That role is enough for every action
+  the app provides.
 - Network access from the Splunk SOAR instance (or the automation broker that runs the app) to
   the BlockShield API. See [Port Information](#port-information).
 
@@ -41,8 +41,10 @@ password field, so Splunk SOAR stores it encrypted and does not write it to acti
 4. Optional: on the **Approval Settings** tab, require approval before actions run. The 'add bulk'
    actions change the blocklist, so approval is a useful safeguard while you roll out new playbooks.
 1. Optional: on the **Access Control** tab, limit which users and roles can run actions on the asset.
-1. Click **Save**, then **Test Connectivity**. The app calls `GET /v1/health` and reports
-   `Test Connectivity Passed` when the API answers with a 2xx status.
+1. Click **Save**, then **Test Connectivity**. The app calls `POST /v1/login` with the
+   **username** and **password**, and reports
+   `Test Connectivity Passed` when the API answers with a 2xx status, confirming that the API is
+   reachable and the configured credentials are valid.
 
 ### Troubleshooting
 
@@ -56,22 +58,32 @@ password field, so Splunk SOAR stores it encrypted and does not write it to acti
 
 ## Actions
 
-| ACTION | TYPE | WHAT IT DOES |
-|--------|------|--------------|
-| **test connectivity** | test | Checks the asset configuration against `GET /v1/health`. |
-| **get ip info** | investigate | Looks up one IP address with `GET /v1/ipinfo/<ip>` and returns the BlockShield response as the action data. |
-| **add bulk domains** | contain | Submits domains to the blocklist with `POST /v1/bulk_domains`. |
-| **add bulk ips** | contain | Submits IP addresses to the blocklist with `POST /v1/bulk_ips`. |
-| **add bulk urls** | contain | Submits URLs to the blocklist with `POST /v1/bulk_urls`. |
+| ACTION | TYPE | WHAT IT DOES | LEAST PRIVILEGED ROLE |
+|--------|------|--------------|-----------------------|
+| **test connectivity** | test | Checks the asset configuration by logging in with `POST /v1/login`. | SOAR |
+| **get ip info** | investigate | Looks up one IP address with `GET /v1/ipinfo/<ip>` and returns the BlockShield response as the action data. | SOAR |
+| **add bulk domains** | contain | Submits domains to the blocklist with `POST /v1/bulk_domains`. | SOAR |
+| **add bulk ips** | contain | Submits IP addresses to the blocklist with `POST /v1/bulk_ips`. | SOAR |
+| **add bulk urls** | contain | Submits URLs to the blocklist with `POST /v1/bulk_urls`. | SOAR |
+
+The **LEAST PRIVILEGED ROLE** column names the lowest BlockShield role the asset's **username**
+needs to run each action.
 
 The three 'add bulk' actions share the same behavior:
 
 - **domains**, **ips** and **urls** accept a single value or a comma-separated list, for example
   `198.51.100.7, 203.0.113.9`. The app trims whitespace and drops empty entries, so a trailing comma
   or line breaks between values are harmless.
+
 - **source** is required and is sent to BlockShield as the origin of the indicators, for example
   `ThreatFeed` or `SOC`. **description** is optional.
+
+  > **Note:** an account with the **SOAR** role can only run the 'add bulk' actions with a
+  > **source** in the **MANUAL** category. BlockShield rejects submissions that use a source from
+  > any other category.
+
 - **add bulk ips** also accepts **subnet** (default `32`, a single host) and **reported_by**.
+
 - The whole list is sent in one request, so the action either succeeds or fails as a whole. The
   summary reports how many indicators were submitted (`domains_added`, `ips_added` or `urls_added`).
 
