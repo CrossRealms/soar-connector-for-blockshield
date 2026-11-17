@@ -51,7 +51,7 @@ password field, so Splunk SOAR stores it encrypted and does not write it to acti
 | ACTION | TYPE | WHAT IT DOES | LEAST PRIVILEGED ROLE |
 |--------|------|--------------|-----------------------|
 | **test connectivity** | test | Checks the asset configuration by logging in with `POST /v1/login`. | SOAR |
-| **get ip info** | investigate | Looks up one IP address with `GET /v1/ipinfo/<ip>` and returns the BlockShield response as the action data. | SOAR |
+| **get ip info** | investigate | Looks up one IP address with `GET /v1/ipinfo?ip=<ip>` and returns the BlockShield response as the action data. | SOAR |
 | **add bulk domains** | contain | Submits domains to the blocklist with `POST /v1/bulk_domains`. | SOAR |
 | **add bulk ips** | contain | Submits IP addresses to the blocklist with `POST /v1/bulk_ips`. | SOAR |
 | **add bulk urls** | contain | Submits URLs to the blocklist with `POST /v1/bulk_urls`. | SOAR |

@@ -123,7 +123,7 @@ class BlockShieldConnector(BaseConnector):
         if not ip:
             return action_result.set_status(phantom.APP_ERROR, BLOCKSHIELD_ERR_MISSING_PARAM.format(param="ip"))
 
-        ret_val, response = self._make_rest_call(f"{BLOCKSHIELD_IPINFO_ENDPOINT}/{ip}", action_result)
+        ret_val, response = self._make_rest_call(BLOCKSHIELD_IPINFO_ENDPOINT, action_result, params={"ip": ip})
 
         if phantom.is_fail(ret_val):
             return action_result.get_status()
